@@ -1,9 +1,10 @@
+
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: python-app
   title: python flask template
-  description: Provisions a minimalistic flask application with techdocs support
+  description: Provisions a minimalistic Flask application with TechDocs support
 spec:
   owner: development
   type: service
@@ -12,7 +13,7 @@ spec:
     - title: Fill in some steps
       required:
         - component_id
-        - environment 
+        - environment
       properties:
         component_id:
           title: Component name
@@ -36,17 +37,24 @@ spec:
         url: ./template
         values:
           app_name: ${{ parameters.component_id }}
-          app_env: ${{ parameters.environmet }}
+          app_env: ${{ parameters.environment }}
 
     - id: publish
       name: Publish
       action: publish:github
       input:
-        allowedHosts:
-          - github.com
-        description: This is ${{parameters.component_id}}
-        repoUrl: github.com?owner=rubenpinzon-sketch&repo=${{parameters.component_id}}
+        description: This is ${{ parameters.component_id }}
+        # Formato de repoUrl: host?owner=<org-or-user>&repo=<repo-name>[&workspace=<enterprise>&branch=<branch>]
+        repoUrl: github.com?owner=rubenpinzon-sketch&repo=${{ parameters.component_id }}
         protectDefaultBranch: false
+        # Opcionalmente puedes fijar la rama por defecto si tu plantilla asume 'main':
+        # defaultBranch: main
+        # Si quieres visibilidad privada:
+        # repoVisibility: private
+        # Si quieres agregar colaboradores:
+        # collaborators:
+        #   - team: devs
+        #     permission: push
 
     - id: register
       name: Register
@@ -58,4 +66,4 @@ spec:
   output:
     links:
       - title: Repository
-        url: ${{ steps['publish'].output.remoteUrl }}
+        url: ${{ steps.publish.output.remoteUrl }}
