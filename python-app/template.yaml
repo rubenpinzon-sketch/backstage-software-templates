@@ -1,0 +1,70 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: python-app
+  title: python flask template
+  description: Provisions a minimalistic flask application with techdocs support
+spec:
+  owner: development
+  type: service
+
+  parameters:
+    - title: Fill in some steps
+      required:
+        - component_id
+        - environmet
+      properties:
+        component_id:
+          title: Component name
+          type: string
+          description: Provide a component (microservice) name
+          pattern: '^[a-zA-Z][a-zA-Z0-9-_]+$'
+        environmet:
+          title: Environment
+          type: string
+          description: Environment where the component will be deployed
+          enum:
+            - dev
+            - syt
+            - prd
+
+
+  steps:
+    - id: fetchBase
+      name: Fetch Base
+      action: fetch:template
+      input:
+        url: ./template
+        values:
+          name: ${{ parameters.name }}
+          owner: ${{ parameters.owner }}
+
+    - id: fetchDocs
+      name: Fetch Docs
+      action: fetch:plain
+      input:
+        targetPath: ./community
+        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+
+    - id: publish
+      name: Publish
+      action: publish:github
+      input:
+        description: This is ${{ parameters.name }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: 'main'
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
