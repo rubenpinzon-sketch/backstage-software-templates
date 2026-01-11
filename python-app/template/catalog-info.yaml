@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{values.app_name}}
+  description: Pyton app displays the time and named ${{values.app_name}}.
+  annotations:
+    github.com/project-slug: rubenpinzon-sketch/${{values.app_name}}
+spec:
+  type: service
+  owner: development
+  lifecycle: experimental
