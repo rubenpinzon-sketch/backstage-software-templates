@@ -35,8 +35,8 @@ spec:
       input:
         url: ./template
         values:
-          name: ${{ parameters.name }}
-          owner: ${{ parameters.owner }}
+          app_name: ${{ parameters.component_id }}
+          app_env: ${{ parameters.environmet }}
 
     - id: publish
       name: Publish
@@ -44,8 +44,8 @@ spec:
       input:
         allowedHosts:
           - github.com
-        description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
+        description: This is ${{parameters.component_id}}
+        repoUrl: github.com?owner=ruenpinzon-sketch&repo=${{parameters.component_id}}
         protectDefaultBranch: false
 
     - id: register
