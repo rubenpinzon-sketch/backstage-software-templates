@@ -12,14 +12,14 @@ spec:
     - title: Fill in some steps
       required:
         - component_id
-        - environmet
+        - environment 
       properties:
         component_id:
           title: Component name
           type: string
           description: Provide a component (microservice) name
           pattern: '^[a-zA-Z][a-zA-Z0-9-_]+$'
-        environmet:
+        environment:
           title: Environment
           type: string
           description: Environment where the component will be deployed
@@ -45,7 +45,7 @@ spec:
         allowedHosts:
           - github.com
         description: This is ${{parameters.component_id}}
-        repoUrl: github.com?owner=ruenpinzon-sketch&repo=${{parameters.component_id}}
+        repoUrl: github.com?owner=rubenpinzon-sketch&repo=${{parameters.component_id}}
         protectDefaultBranch: false
 
     - id: register
