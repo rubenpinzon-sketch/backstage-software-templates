@@ -26,7 +26,6 @@ spec:
           description: Environment where the component will be deployed
           enum:
             - dev
-            - syt
             - prd
 
   steps:
@@ -44,17 +43,8 @@ spec:
       action: publish:github
       input:
         description: This is ${{ parameters.component_id }}
-        # Formato de repoUrl: host?owner=<org-or-user>&repo=<repo-name>[&workspace=<enterprise>&branch=<branch>]
         repoUrl: github.com?owner=rubenpinzon-sketch&repo=${{ parameters.component_id }}
         protectDefaultBranch: false
-        # Opcionalmente puedes fijar la rama por defecto si tu plantilla asume 'main':
-        # defaultBranch: main
-        # Si quieres visibilidad privada:
-        # repoVisibility: private
-        # Si quieres agregar colaboradores:
-        # collaborators:
-        #   - team: devs
-        #     permission: push
 
     - id: register
       name: Register
