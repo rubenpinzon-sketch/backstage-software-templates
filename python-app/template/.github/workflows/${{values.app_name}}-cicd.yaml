@@ -23,6 +23,10 @@ jobs:
           username: ${{ '${{ vars.DOCKERHUB_USERNAME }}' }}
           password: ${{ '${{ secrets.DOCKERHUB_TOKEN }}' }}
 
+      - name: Show image tag
+        run: |
+          echo "IMAGE=${{ vars.DOCKERHUB_USERNAME }}/python-app-1:${{ env.COMMIT_ID }}"
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
