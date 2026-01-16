@@ -25,13 +25,13 @@ jobs:
 
       - name: Show image tag
         run: |
-          echo "IMAGE=${{ vars.DOCKERHUB_USERNAME }}/python-app-1:${{ env.COMMIT_ID }}"
+          echo "IMAGE=${{ vars.DOCKERHUB_USERNAME }}/${{values.app_name}}:${{ env.COMMIT_ID }}"
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ '${{ vars.DOCKERHUB_USERNAME }}' }}/${{ '${{values.app_name}}' }}:${{ '${{ env.COMMIT_ID }}' }}
+          tags: ${{ '${{ vars.DOCKERHUB_USERNAME }}' }}/${{values.app_name}}:${{ '${{ env.COMMIT_ID }}' }}
 
     outputs:
       commit_id: ${{ '${{ env.COMMIT_ID }}' }}
