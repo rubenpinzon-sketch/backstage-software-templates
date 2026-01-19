@@ -73,13 +73,13 @@ jobs:
           # Connects the argocd repo
           repo="https://github.com/ruben-pinzon/${{values.app_name}}.git"
           argocd repo list \
-          | grep -q $'${repo}' \
-          || argocd repo add $'${repo}'
+          | grep -q ${repo} \
+          || argocd repo add ${repo}
 
           # Creates the argocd app
           argocd app get ${{values.app_name}}  || argocd app create ${{values.app_name}} \
-            --repo $'${repo}' \
-            --path charts/$'${repo}' \
+            --repo ${repo} \
+            --path charts/${repo} \
             --dest-namespace '${{values.app_env}}' \
             --dest-server https://kubernetes.default.svc \
             --values values '${{values.app_env}}' \
