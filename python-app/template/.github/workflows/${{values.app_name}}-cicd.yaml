@@ -70,6 +70,13 @@ jobs:
       - name: Ensure ArgoCD Application repo and app is Synced
         shell: bash
         run: |
+          # login to argocd
+          argocd login argocd-server.argocd  \
+            --insecure \
+            --grpc-web \
+            --username admin \
+            --password ${{ '${{ secrets.ARGOCD_PASSWORD }}' }}
+          
           # Connects the argocd repo
           repo="https://github.com/ruben-pinzon/${{values.app_name}}.git"
           argocd repo list \
