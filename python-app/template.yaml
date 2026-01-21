@@ -27,10 +27,6 @@ spec:
           enum:
             - dev
             - prd
-        dockerhub_username:
-            type: string
-            default: rubenpinzon
-    
 
   steps:
     - id: fetchBase
